@@ -9,7 +9,7 @@ To start the API outside of the container, change directory into the api folder 
 
 #### Response: {"prediction":{"classification":"hearing loss","code":3140,"probability":"89%"},"text":"Ringing in my ear"}
 
-To run the web interface run **python ClassificationSite.py** and open up a browser in https://localhost:5000
+To run the web interface run **python ClassificationSite.py** and open up a browser in https://localhost:8000
 
 
 
