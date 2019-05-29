@@ -6,15 +6,15 @@ from sklearn.externals import joblib
 
 
 # get codes for prediction
-dfLabels = pd.read_excel('./LinnauesClassifier/data/Contention_Dictionary.xlsx')
+dfLabels = pd.read_excel('./api/tM/Contention_Dictionary.xlsx')
 dLabels = {}
 for index, row in dfLabels.iterrows():
     dLabels[row['New Contention Classification Text'].lower().strip()] = row['IDs']
 
 # load the vectorizer
-vectorizer = joblib.load(filename='./tM/vectorizer.pkl')
+vectorizer = joblib.load(filename='./api/tM/vectorizer.pkl')
 # load the classifier
-clf = joblib.load(filename='./tM/LRclf.pkl')
+clf = joblib.load(filename='./api/tM/LRclf.pkl')
 
 # Load Dataset
 df = pd.read_csv(sys.argv[1])

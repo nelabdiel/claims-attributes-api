@@ -51,10 +51,10 @@ clf = LogisticRegression(multi_class='ovr', solver='lbfgs', n_jobs=-1, max_iter=
 clf.fit(X_train, y_train)
 
 # save the vectorizer object as vectorizer.pkl
-joblib.dump(vectorizer, filename='../../tM/vectorizer.pkl')
+joblib.dump(vectorizer, filename='../../api/tM/vectorizer.pkl')
 
 # save the classifier object as LRclf.pkl
-joblib.dump(clf, filename='../../tM/LRclf.pkl')
+joblib.dump(clf, filename='../../api/tM/LRclf.pkl')
 
 # Measure accuracy
 y_pred = clf.predict(X_test)

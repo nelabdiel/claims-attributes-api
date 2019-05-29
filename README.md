@@ -1,8 +1,11 @@
 # Contention Classification Model API
 
-To run start the API run **python classificationAPI.py**
 
-#### API Call: curl -i -H "Content-Type: application/json" -X POST -d '{"claim_text":"Ringing in my ear"}' http://localhost:5000/api/v1.0/classification
+To start the API as a docker container run **docker-compose up**
+
+To start the API outside of the container, change directory into the api folder (**cd api**) then run **python classificationAPI.py**
+
+#### API Call: curl -i -H "Content-Type: application/json" -X POST -d '{"claim_text":"Ringing in my ear"}' http://localhost:8000/api/v1.0/classification
 
 #### Response: {"prediction":{"classification":"hearing loss","code":3140,"probability":"89%"},"text":"Ringing in my ear"}
 

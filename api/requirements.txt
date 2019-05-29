@@ -1,0 +1,6 @@
+pandas==0.23.4
+numpy==1.15.4
+scikit-learn==0.20.1
+xlrd==1.2.0
+gunicorn==19.9.0
+flask==1.0.2

@@ -7,15 +7,15 @@ import numpy as np
 
 
 # get codes for prediction
-dfLabels = pd.read_excel('LinnaeusClassifier/data/Contention_Dictionary.xlsx')
+dfLabels = pd.read_excel('api/tM/Contention_Dictionary.xlsx')
 dLabels = {}
 for index, row in dfLabels.iterrows():
     dLabels[row['New Contention Classification Text'].lower().strip()] = row['IDs']
 
 # load the vectorizer
-vectorizer = joblib.load(filename='tM/vectorizer.pkl')
+vectorizer = joblib.load(filename='api/tM/vectorizer.pkl')
 # load the classifier
-clf = joblib.load(filename='tM/LRclf.pkl')
+clf = joblib.load(filename='api/tM/LRclf.pkl')
 
 
 # Create the application instance
