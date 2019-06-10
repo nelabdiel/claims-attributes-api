@@ -29,7 +29,7 @@ def index():
             text = request.json['claim_text']
             vText = vectorizer.transform([text])
             classification = clf.predict(vText)[0]
-            confidence = str(int(clf.predict_proba(vText).max()*100)) + '%'
+            confidence = int(clf.predict_proba(vText).max()*100)
             code = dLabels[classification]
             print('yes')
             print('\n')
