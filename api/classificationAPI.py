@@ -1,48 +1,52 @@
 import os
 from flask import Flask, jsonify, request, render_template, abort
-from sklearn.externals import joblib
-import pandas as pd
-import numpy as np
-
-
-# get codes for prediction
-dfLabels = pd.read_excel('tM/Contention_Dictionary.xlsx')
-dLabels = {}
-for index, row in dfLabels.iterrows():
-    dLabels[row['New Contention Classification Text'].lower().strip()] = row['IDs']
-
-# load the vectorizer
-vectorizer = joblib.load(filename='tM/vectorizer.pkl')
-# load the classifier
-clf = joblib.load(filename='tM/LRclf.pkl')
-
+from sklearn.externals.joblib import load as pickle_loader
+import csv
 
 # Create the application instance
-app = Flask(__name__)
+APP = Flask(__name__)
 
+# Load classification codes and labels
+with open('tM/classification_text.csv', mode='r', encoding='utf-8') as infile:
+    dict_reader = csv.DictReader(infile)
+    ids = { i['label'].lower():i['id'] for i in dict_reader }
+print('codes and labels loaded')
 
-# Create a URL route in our application for "/"
+# Load the vectorizer
+vectorizer = pickle_loader(filename='tM/vectorizer.pkl')
+print('vectorizer loaded')
 
-@app.route('/api/v1.0/classification', methods=['POST'])
+# Load the classifier
+classifier = pickle_loader(filename='tM/LRclf.pkl')
+print('classifier loaded')
+
+# Classification route
+@APP.route('/api/v1.0/classification', methods=['GET'])
 def index():
-    if request.json:
-            text = request.json['claim_text']
-            vText = vectorizer.transform([text])
-            classification = clf.predict(vText)[0]
-            confidence = int(clf.predict_proba(vText).max()*100)
-            code = dLabels[classification]
-            print('yes')
-            print('\n')
-            
-            d = {'text': text, 'prediction': {
-                 'classification': classification,
-                 'code':code,
-                 'probability': confidence}}
-            return jsonify(d)
-    else:
-        abort(404)
 
-# If we're running in stand alone mode, run the application
-if __name__ == '__main__':
-    #port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0') #, port=port)
+    request_data_as_json = request.get_json(force=True, silent=True)
+    if not request_data_as_json:
+        return abort(400)
+
+    claim_text = request_data_as_json.get('claim_text', None)
+    if not claim_text:
+        return abort(400, 'Request JSON missing claim_text parameter.')
+
+    vectored_text = vectorizer.transform([claim_text])
+
+    classification_text = classifier.predict(vectored_text)[0]
+
+    response = {
+        'claim_text': claim_text,
+        'classification_text': classification_text,
+        'classification_code': ids[classification_text],
+        'classification_confidence': classifier.predict_proba(
+            vectored_text).max()
+    }
+
+    return jsonify(response)
+
+# APP.debug = True
+# PORT = os.getenv('PORT', '5000')
+# if __name__ == '__main__':
+#     APP.run(host='0.0.0.0', port=int(PORT))
