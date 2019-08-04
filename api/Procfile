@@ -1,1 +1,1 @@
-web: gunicorn -w 4 -b :8000 classificationAPI:APP
+web: gunicorn -w 1 --preload --log-level debug --capture-output --error-logfile /home/vcap/logs/errors.log api:APP

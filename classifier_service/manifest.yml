@@ -1,0 +1,7 @@
+applications:
+- name: cc-classifier-service
+  instances: 1
+  memory: 512M
+  disk_quota: 1024M
+  buildpack: python_buildpack
+  stack: cflinuxfs3
