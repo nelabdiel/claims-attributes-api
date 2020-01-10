@@ -1,0 +1,4 @@
+import os
+
+VECTORIZER_URI = os.getenv('VECTORIZER_URI')
+CLASSIFIER_URI = os.getenv('CLASSIFIER_URI')

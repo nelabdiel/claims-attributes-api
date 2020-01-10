@@ -1,0 +1,11 @@
+applications:
+- name: cc-api
+  instances: 1
+  memory: 128M
+  disk_quota: 1024M
+  buildpack: python_buildpack
+  stack: cflinuxfs3
+  # Pull from vars.yml
+  env:
+    VECTORIZER_URI: ((vectorizer_uri))
+    CLASSIFIER_URI: ((classifier_uri))

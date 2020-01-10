@@ -1,0 +1,7 @@
+applications:
+- name: cc-vectorizer-service
+  instances: 1
+  memory: 1024M
+  disk_quota: 1024M
+  buildpack: python_buildpack
+  stack: cflinuxfs3
