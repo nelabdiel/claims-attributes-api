@@ -7,7 +7,7 @@ from config import VECTORIZER_URI, CLASSIFIER_URI
 
 APP = Flask(__name__)
 
-@APP.route('/', methods=['GET'])
+@APP.route('/', methods=['GET', 'POST'])
 def index():
     """Primary API route."""
 
@@ -34,11 +34,11 @@ def index():
     # Classify claim text.
     try:
         classified_text = requests.post(
-            CLASSIFIER_URI, json=vectored_text)
+            CLASSIFIER_URI, json=vectored_text).json()
     except ServiceConnectionError:
         abort(500, '{}Classifier connection error.'.format(base_error_message))
-    if not classified_text.get('classified_text', None):
+    if not classified_text.get('classification_text', None):
         abort(500, '{}Vectorized claim text classification error.')
 
     # Return response.
-    return jsonify(classified_text.json())
+    return jsonify(classified_text)
