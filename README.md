@@ -1,20 +1,53 @@
 # Contention Classification Model API
 
-
-To start the API as a docker container run **docker-compose up**
-
-To start the API outside of the container, change directory into the api folder (**cd api**) then run **python classificationAPI.py**
-
-#### API Call: curl -i -H "Content-Type: application/json" -X POST -d '{"claim_text":"Ringing in my ear"}' http://localhost:8000/api/v1.0/classification
-
-#### Response: {"prediction":{"classification":"hearing loss","code":3140,"probability":89},"text":"Ringing in my ear"}
-
-To run the web interface run **python ClassificationSite.py** and open up a browser in https://localhost:8000
+This model is designed to accept a string of text containing a disability description and return the proper VA approved classification.
 
 
+## Setup
 
-# Linnaeus Classifier
-This classifier is designed to accept a string of text containing a disability description from a 526 form and return the proper VA approved classification.
+
+Obtain the two model files from someone on the team and add them to the following directories:
+```
+classifier_service/data/LRclf.pkl
+vectorizer_service/data/vectorizer.pkl
+```
+
+### Running locally (not containerized) 
+
+Open three terminal tabs, one to `/api`, one to `/classifier_service`, one to `/vectorizer_service`.
+
+Export the following vars in each respective tab:
+
+```
+export FLASK_APP=api.py 
+export VECTORIZER_URI=http://127.0.0.1:5001/
+export CLASSIFIER_URI=http://127.0.0.1:5002/
+```
+
+```
+export FLASK_RUN_PORT=5001
+export FLASK_APP=vectorizer.py
+```
+
+```
+export FLASK_RUN_PORT=5002
+export FLASK_APP=classifier.py
+```
+
+#### Testing an API call
+
+```
+curl -i -H "Content-Type: application/json" -X POST -d '{"claim_text":"Ringing in my ear"}' http://127.0.0.1:5000/
+```
+
+The response should look something like:
+
+```
+{'classification_code': '3140', 'classification_confidence': 0.8977642064991966, 'classification_text': 'hearing loss'}
+```
+
+
+# TODO: Examine the rest of this README for correctness
 
 **IMPORTANT**: The model needs to be trained once before running _predictor.py_ or _predictorBulk.py_ to generate the pickled files for Count Vectorizer and the Logistic Regression model. Simply follow the steps below and things should work smoothly
 
