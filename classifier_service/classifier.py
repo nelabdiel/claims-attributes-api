@@ -23,13 +23,17 @@ def index():
     raw_vectored_text = request.get_json(force=True)['vectored_text']
     vectored_text = csr_matrix(raw_vectored_text)
 
-    classification_text = classifier.predict(vectored_text)[0].strip()
+    output = []
+    classifications = classifier.predict(vectored_text)
 
-    return jsonify(
-        {
-            'classification_text':classification_text,
+    for classification in classifications:
+        output.append({
+            'classification_text':classification.strip(),
             'classification_confidence': classifier.predict_proba(
                 vectored_text).max(),
-            'classification_code': ids[classification_text],
-        }
-    )
+            # TODO: this line needs a fix - we're passing the array of vectors in there
+            # so we'll return the same confidence for every classification
+            'classification_code': ids[classification],
+        })
+
+    return jsonify(output)

@@ -43,7 +43,24 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"claim_text":"Ringing i
 The response should look something like:
 
 ```
-{'classification_code': '3140', 'classification_confidence': 0.8977642064991966, 'classification_text': 'hearing loss'}
+[
+  {
+    "classification_code": "3140", 
+    "classification_confidence": 0.9638608555566559, 
+    "classification_text": "hearing loss"
+  }, 
+  {
+    "classification_code": "9010", 
+    "classification_confidence": 0.9638608555566559, 
+    "classification_text": "post traumatic stress disorder (ptsd) combat - mental disorders"
+  }, 
+  {
+    "classification_code": "8998", 
+    "classification_confidence": 0.9638608555566559, 
+    "classification_text": "musculoskeletal - mid/lower back (thoracolumbar spine)"
+  }
+]
+
 ```
 
 
