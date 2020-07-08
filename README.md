@@ -1,5 +1,7 @@
 # Contention Classification Model API
 
+# Updates: The current version now supports multiple contentions in the same request and returns additional information about flashes and special issues.
+
 This model is designed to accept a string of text containing a disability description and return the proper VA approved classification.
 
 
@@ -60,7 +62,7 @@ python special_issues.py
 curl -i -H "Content-Type: application/json" -X POST -d '{"claim_text":["Ringing in my ear", "cancer due to agent orange", "p.t.s.d from gulf war", "recurring nightmares", "skin condition because of homelessness"]}' http://127.0.0.1:5000/
 ```
 
-The response should look something like:
+The response should looks like this:
 
 ```
 {"classification_code":["3140","8935","8977","8989","9016"],"classification_text":["hearing loss","cancer - genitourinary","gulf war undiagnosed illness","mental disorders","skin"],"flashes_text":["Homeless"],"special_issues_text":["PTSD/1","AOOV","GW"]}
@@ -70,6 +72,8 @@ The response should look something like:
 #### Python Version: 3.7
 
 
-Created by: Bennett Gebken
+Created by: Nel Abdiel 
 
-Retrained and packaged by: Nel Abdiel 
+Based on the work done by: Bennett Gebken
+
+Restructure by: Patrick Bateman, Alex Prokop
