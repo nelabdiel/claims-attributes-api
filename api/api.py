@@ -3,7 +3,8 @@ vectorizer_service."""
 
 import requests
 from flask import Flask, request, abort, jsonify
-from config import VECTORIZER_URI, CLASSIFIER_URI
+from config import VECTORIZER_URI, CLASSIFIER_URI, FLASHES_URI, SPECIAL_ISSUES_URI
+import os #Comment out if if at the bottom removed
 
 APP = Flask(__name__)
 
@@ -40,5 +41,33 @@ def index():
     if not classified_text.get('classification_text', None):
         abort(500, '{}Vectorized claim text classification error.')
 
+    # Flashes claim text
+    try:
+        flashes_text = requests.post(
+            FLASHES_URI, json=claim_text).json()
+    except ServiceConnectionError:
+        abort(500, '{}Flashes connection error.'.format(base_error_message))
+    if not classified_text.get('classification_text', None):
+        abort(500, '{}Flashes finding error.')
+        
+    # Flashes claim text
+    try:
+        special_issues_text = requests.post(
+            SPECIAL_ISSUES_URI, json=claim_text).json()
+    except ServiceConnectionError:
+        abort(500, '{}Special Issues connection error.'.format(base_error_message))
+    if not classified_text.get('classification_text', None):
+        abort(500, '{}Special Issues finding error.')
+    
+    payload = {}
+    payload.update(classified_text)
+    payload.update(flashes_text)
+    payload.update(special_issues_text)
+    print(payload)
     # Return response.
-    return jsonify(classified_text)
+    return jsonify(payload)
+
+#Comment out everything below for CloudFoundry deployment
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    APP.run(host='0.0.0.0' , port=port)

@@ -1,5 +1,6 @@
 from flask import Flask, abort, jsonify, request
 from sklearn.externals.joblib import load as pickle_loader
+import os #Comment out if if at the bottom removed
 
 APP = Flask(__name__)
 print('starting vectorizer service...')
@@ -16,7 +17,14 @@ def index():
         claim_text = request.get_json(force=True)['claim_text']
     except KeyError as e:
         abort(500, e)
-    vectored_text_as_matrix = vectorizer.transform([claim_text])
+        
+        
+    vectored_text_as_matrix = vectorizer.transform(claim_text)
 
     return jsonify(
         {'vectored_text': vectored_text_as_matrix.toarray().tolist() })
+
+#Comment out everything below for CloudFoundry deployment
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5001))
+    APP.run(host='0.0.0.0' , port=port)

@@ -2,6 +2,7 @@ import csv
 from flask import Flask, request, abort, jsonify
 from sklearn.externals.joblib import load as pickle_loader
 from scipy.sparse.csr import csr_matrix
+import os #Comment out if if at the bottom removed
 
 APP = Flask(__name__)
 print('starting classifier_service...')
@@ -23,13 +24,22 @@ def index():
     raw_vectored_text = request.get_json(force=True)['vectored_text']
     vectored_text = csr_matrix(raw_vectored_text)
 
-    classification_text = classifier.predict(vectored_text)[0].strip()
-
+    classification_text = classifier.predict(vectored_text)
+    print(classification_text)
+    classification_codes = []
+    for el in classification_text:
+        classification_codes.append(ids[el])
+    print(classification_codes)
     return jsonify(
         {
-            'classification_text':classification_text,
-            'classification_confidence': classifier.predict_proba(
-                vectored_text).max(),
-            'classification_code': ids[classification_text],
+            'classification_text':classification_text.tolist(),
+            #'classification_confidence': classifier.predict_proba(
+                #vectored_text).max(),
+            'classification_code': classification_codes,
         }
     )
+
+#Comment out everything below for CloudFoundry deployment
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5002))
+    APP.run(host='0.0.0.0' , port=port)
