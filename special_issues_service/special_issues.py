@@ -22,7 +22,9 @@ spi = {'als': 'ALS','amyotrophic lateral sclerosis': 'ALS',
        'pts': 'PTSD/1','shell shock': 'PTSD/1',
        'stress post traumatic': 'PTSD/1','stress disorder': 'PTSD/1',
        'personal trauma': 'PTSD/3','acquired psychiatric': 'PTSD/3',
-       'radiation': 'RDN','sarcoidosis': 'SARCO'}
+       'radiation': 'RDN','sarcoidosis': 'SARCO', 'tbi': 'TBI',
+       't b i': 'TBI', 'traumatic brain injury': 'TBI',
+       'c 123': 'C123','c123': 'C123'}
 
 def findSI(x):
     issues = []
