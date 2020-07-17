@@ -1,14 +1,14 @@
-# Contention Classification Model API
+# Claims Attributes API
 
 # Updates: The current version now supports multiple contentions in the same request and returns additional information about flashes and special issues.
 
-This model is designed to accept a string of text containing a disability description and return the proper VA approved classification.
+This API uses Natural Language Understading to infer 526 Benefit Claims Attributes, like classification, flashes and special issues,  from text and other features.
 
 
 ## Setup
 
 
-Obtain the two model files from someone on the team and add them to the following directories:
+Obtain the vectorier and predictive model files from someone on the team and add them to the following directories:
 ```
 classifier_service/data/LRclf.pkl
 vectorizer_service/data/vectorizer.pkl
