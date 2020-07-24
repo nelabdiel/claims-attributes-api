@@ -65,7 +65,7 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"claim_text":["Ringing 
 The response should looks like this:
 
 ```
-{"classification_code":["3140","8935","8977","8989","9016"],"classification_text":["hearing loss","cancer - genitourinary","gulf war undiagnosed illness","mental disorders","skin"],"flashes_text":["Homeless"],"special_issues_text":["PTSD/1","AOOV","GW"]}
+{"classifications":[{"code": "3140", "text": "hearing loss"}, {"code": "8935", "text": "cancer - genitourinary"}, {"code": "8977", "text": "gulf war undiagnosed illness"}, {"code": "8989", "text": "mental disorders"}, {"code": "9016", "text": "skin"}],"flashes_text":["Homeless"],"special_issues_text":["PTSD/1","AOOV","GW"]}
 ```
 
 

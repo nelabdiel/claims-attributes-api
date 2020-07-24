@@ -81,7 +81,7 @@ print('starting special issues service...')
 @APP.route('/', methods=['GET', 'POST'])
 def index():
     print('special issues service called')
-    print(request.get_json(force=True)['claim_text'])
+    #print(request.get_json(force=True)['claim_text'])
     try:
         claim_text = request.get_json(force=True)['claim_text']
     except KeyError as e:

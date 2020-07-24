@@ -34,11 +34,11 @@ def index():
 
     # Classify claim text.
     try:
-        classified_text = requests.post(
+        classifications = requests.post(
             CLASSIFIER_URI, json=vectored_text).json()
     except ServiceConnectionError:
         abort(500, '{}Classifier connection error.'.format(base_error_message))
-    if not classified_text.get('classification_text', None):
+    if not classifications.get('classifications', None):
         abort(500, '{}Vectorized claim text classification error.')
 
     # Flashes claim text
@@ -47,7 +47,7 @@ def index():
             FLASHES_URI, json=claim_text).json()
     except ServiceConnectionError:
         abort(500, '{}Flashes connection error.'.format(base_error_message))
-    if not classified_text.get('classification_text', None):
+    if not flashes_text.get('flashes_text', None):
         abort(500, '{}Flashes finding error.')
         
     # Flashes claim text
@@ -56,14 +56,14 @@ def index():
             SPECIAL_ISSUES_URI, json=claim_text).json()
     except ServiceConnectionError:
         abort(500, '{}Special Issues connection error.'.format(base_error_message))
-    if not classified_text.get('classification_text', None):
+    if not special_issues_text.get('special_issues_text', None):
         abort(500, '{}Special Issues finding error.')
     
     payload = {}
-    payload.update(classified_text)
+    payload.update(classifications)
     payload.update(flashes_text)
     payload.update(special_issues_text)
-    print(payload)
+    #print(payload)
     # Return response.
     return jsonify(payload)
 

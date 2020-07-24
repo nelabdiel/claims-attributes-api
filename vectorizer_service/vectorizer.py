@@ -12,7 +12,7 @@ print('vectorizer loaded')
 @APP.route('/', methods=['GET', 'POST'])
 def index():
     print('vectorizer service called')
-    print(request.get_json(force=True)['claim_text'])
+    #print(request.get_json(force=True)['claim_text'])
     try:
         claim_text = request.get_json(force=True)['claim_text']
     except KeyError as e:

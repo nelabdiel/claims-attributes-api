@@ -25,17 +25,18 @@ def index():
     vectored_text = csr_matrix(raw_vectored_text)
 
     classification_text = classifier.predict(vectored_text)
-    print(classification_text)
-    classification_codes = []
+    #print(classification_text)
+    classifications = []
     for el in classification_text:
-        classification_codes.append(ids[el])
-    print(classification_codes)
+        classifications.append({"code":ids[el], "text": el})
+    #print(classifications)
+    
     return jsonify(
-        {
-            'classification_text':classification_text.tolist(),
+        {#'classification_text':classification_text.tolist(),
             #'classification_confidence': classifier.predict_proba(
                 #vectored_text).max(),
-            'classification_code': classification_codes,
+            #'classification_code': classification_codes,
+            'classifications': classifications,
         }
     )
 
