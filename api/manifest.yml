@@ -9,3 +9,5 @@ applications:
   env:
     VECTORIZER_URI: ((vectorizer_uri))
     CLASSIFIER_URI: ((classifier_uri))
+    SPECIAL_ISSUES_URI: ((special_issues_uri))
+    FLASHES_URI: ((flashes_uri))
