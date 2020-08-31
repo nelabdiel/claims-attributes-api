@@ -42,5 +42,6 @@ def index():
 
 #Comment out everything below for CloudFoundry deployment
 if __name__ == '__main__':
+    # comment out port information only if deploying container
     port = int(os.environ.get("PORT", 5002))
     APP.run(host='0.0.0.0' , port=port)

@@ -3,18 +3,51 @@ version: '3'
 services:
 
   api:
-    container_name: api # Name can be anything
+    container_name: claimsAttributesAPIContainer
     restart: always
     build: ./api
     ports:
       - "8000:8000"
     command: gunicorn -w 1 -b :8000 claimsAttributesAPI:app
 
+  vectorizer:
+    container_name: vectorizerContainer
+    restart: always
+    build: ./vectorizer_service
+    ports:
+      - "8001:8001"
+    command: gunicorn -w 1 -b :8001 vectorizerAPI:app
+
+  classifier:
+    container_name:  classifierContainer
+    restart: always
+    build: ./classifier_service
+    ports:
+      - "8002:8002"
+    command: gunicorn -w 1 -b :8002 classifierAPI:app
+
+  specialIssues:
+    container_name: specialIssuesContainer
+    restart: always
+    build: ./special_issues_service
+    ports:
+      - "8003:8003"
+    command: gunicorn -w 1 -b :8003 specialIssues:app
+    
+  flashes:
+    container_name: flashesContainer
+    restart: always
+    build: ./flashes_service
+    ports:
+      - "8004:8004"
+    command: gunicorn -w 1 -b :8004 flashesAPI:app
+    
+
   nginx:
     container_name: nginx
     restart: always
     build: ./nginx
     ports:
-      - "8001:8001"
+      - "8005:8005"
     depends_on:
       - api
