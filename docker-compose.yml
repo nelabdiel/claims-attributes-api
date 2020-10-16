@@ -1,14 +1,15 @@
-version: '3'
+version: "3"
 
 services:
-
   api:
     container_name: claimsAttributesAPIContainer
     restart: always
     build: ./api
+    env_file:
+      - api_variables.env
     ports:
       - "8000:8000"
-    command: gunicorn -w 1 -b :8000 claimsAttributesAPI:app
+    command: gunicorn -w 1 -b :8000 api:APP
 
   vectorizer:
     container_name: vectorizerContainer
@@ -16,32 +17,31 @@ services:
     build: ./vectorizer_service
     ports:
       - "8001:8001"
-    command: gunicorn -w 1 -b :8001 vectorizerAPI:app
+    command: gunicorn -w 1 -b :8001 vectorizer:APP
 
   classifier:
-    container_name:  classifierContainer
+    container_name: classifierContainer
     restart: always
     build: ./classifier_service
     ports:
       - "8002:8002"
-    command: gunicorn -w 1 -b :8002 classifierAPI:app
+    command: gunicorn -w 1 -b :8002 classifier:APP
 
-  specialIssues:
+  specialissues:
     container_name: specialIssuesContainer
     restart: always
     build: ./special_issues_service
     ports:
       - "8003:8003"
-    command: gunicorn -w 1 -b :8003 specialIssues:app
-    
+    command: gunicorn -w 1 -b :8003 special_issues:APP
+
   flashes:
     container_name: flashesContainer
     restart: always
     build: ./flashes_service
     ports:
       - "8004:8004"
-    command: gunicorn -w 1 -b :8004 flashesAPI:app
-    
+    command: gunicorn -w 1 -b :8004 flashes:APP
 
   nginx:
     container_name: nginx
