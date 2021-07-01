@@ -67,7 +67,7 @@ def index():
     
     codes = []
     for i in len(listOfC):
-        ClasI = classifications[i]
+        ClasI = listOfC[i]
         # if we haven't seen the classification code, create it
         Ccode = ClasI[code]
         if Ccode not in codes:
@@ -79,9 +79,11 @@ def index():
             newContention = '%s. %s' % (CCC[ptu]['contention'], claim_text[i])
             CCC[ptu] = {'code': CCC[ptu][code], 'classification': CCC[ptu][text], 'contention': newContention}
             
+    # create a dictionary to save the results         
+    classifications = {'results': CCC}
     
     payload = {}
-    payload.update(CCC)
+    payload.update(classifications)
     payload.update(flashes_text)
     payload.update(special_issues_text)
     #print(payload)

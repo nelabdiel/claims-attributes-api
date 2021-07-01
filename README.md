@@ -69,7 +69,7 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"claim_text":["Ringing 
 The response should looks like this:
 
 ```
-{"classifications":[{"code": "3140", "classification": "hearing loss", "contention": "Ringing in my ear. trouble hearing"}, {"code": "8935", "classification": "cancer - genitourinary", "contention": "cancer due to agent orange"}, {"code": "8977", "classification": "gulf war undiagnosed illness", "contention": "p.t.s.d from gulf war"}, {"code": "8989", "classification": "mental disorders", "contention": "recurring nightmares"}, {"code": "9016", "classification": "skin", "contention": "skin condition because of homelessness"}],"flashes_text":["Homeless"],"special_issues_text":["PTSD/1","AOOV","GW"]}
+{"results":[{"code": "3140", "classification": "hearing loss", "contention": "Ringing in my ear. trouble hearing"}, {"code": "8935", "classification": "cancer - genitourinary", "contention": "cancer due to agent orange"}, {"code": "8977", "classification": "gulf war undiagnosed illness", "contention": "p.t.s.d from gulf war"}, {"code": "8989", "classification": "mental disorders", "contention": "recurring nightmares"}, {"code": "9016", "classification": "skin", "contention": "skin condition because of homelessness"}],"flashes_text":["Homeless"],"special_issues_text":["PTSD/1","AOOV","GW"]}
 ```
 
 
