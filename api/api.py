@@ -58,9 +58,30 @@ def index():
         abort(500, '{}Special Issues connection error.'.format(base_error_message))
     if not special_issues_text.get('special_issues_text', None):
         abort(500, '{}Special Issues finding error.')
+        
+    #Contentions Classifications Conflated 
+    CCC = []
+    
+    #list of classifications
+    listOfC = classifications['classifications']
+    
+    codes = []
+    for i in len(listOfC):
+        ClasI = classifications[i]
+        # if we haven't seen the classification code, create it
+        Ccode = ClasI[code]
+        if Ccode not in codes:
+            CCC.append({'code': Ccode, 'classification': ClasI['text'], 'contention': claim_text[i]})
+            codes.append(Ccode)
+        else:
+            # position to update
+            ptu = codes.index(Ccode)
+            newContention = '%s. %s' % (CCC[ptu]['contention'], claim_text[i])
+            CCC[ptu] = {'code': CCC[ptu][code], 'classification': CCC[ptu][text], 'contention': newContention}
+            
     
     payload = {}
-    payload.update(classifications)
+    payload.update(CCC)
     payload.update(flashes_text)
     payload.update(special_issues_text)
     #print(payload)
