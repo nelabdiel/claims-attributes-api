@@ -77,7 +77,7 @@ def index():
             # position to update
             ptu = codes.index(Ccode)
             newContention = '%s. %s' % (CCC[ptu]['contention'], claim_text[i])
-            CCC[ptu] = {'code': CCC[ptu][code], 'classification': CCC[ptu][text], 'contention': newContention}
+            CCC[ptu] = {'code': CCC[ptu]['code'], 'classification': CCC[ptu]['classification'], 'contention': newContention}
             
     # create a dictionary to save the results         
     classifications = {'results': CCC}
